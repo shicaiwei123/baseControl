@@ -1,0 +1,630 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : sans-serif;
+			color : white;
+			background-color : #21489e;
+			padding: 0.3em;
+		}
+		body {
+			font-family : verdana;
+		}
+		td, th {
+			padding: 0.5em;
+			text-align : center;
+			width : 18%;
+		}
+		th {
+			background-color : #A6CAF0;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+		}
+		
+		.DRC_summary_header {							
+			padding-bottom : 0.1em;
+			border : 0px solid black;							
+			width: 100%;
+                        align: right;
+                        
+		}
+
+		.DRC_summary_header_col1, 
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3
+		{
+			color : black;
+			font-size:150%;
+                        padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2: 0em;
+			border : 0px solid black;
+			width : auto;
+			vertical-align: top;
+			font-weight: bold;				
+		}
+		
+		.DRC_summary_header_col1 	
+		{		                       
+			text-align: right;
+                        width: auto;	
+		}
+
+		.DRC_summary_header_col2 	
+		{		
+			text-align: center;	
+		}
+
+		.DRC_summary_header_col3 	
+		{		
+			text-align: left;	
+		}
+
+
+		
+		.header_holder
+		{
+		Width = 100%;
+		border = 0px solid green;
+		padding = 0;
+		}
+		
+		
+		
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+                {
+			left:0;
+			top:0;
+			padding-top : 0.1em;			
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top
+
+		}
+		.front_matter {	
+			
+			margin-top: 5px;
+ 			margin-left: 0px;					 			
+ 			horizontal-align: left;
+		}
+				
+		
+		.front_matter_column1 {
+			width : 10em;	
+			text-align  : right;
+			padding-right:0.1em;
+			
+		}
+		
+		.front_matter_column2 {
+                        width: 0.1em;
+			align: center;
+			text-align : center;
+			margin-right  : 0.1em;	
+			margin-left   : 0.1em;
+		}
+		.front_matter_column3 {
+			width         : auto;  
+			text-align    : left;	
+			margin-right  : 0.5em;				
+		}
+		
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : right;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #EEEEE0 
+		}
+		tr.onmouseout_even { 
+			background-color : #F3F3E3   
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : lightYellow
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #008000 
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://D:\A\Templates\AD-rgb_logo_223x64.gif
+		"><a href="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports" class="customize"><acronym title="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports">customize</acronym></a><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td Style="width:70%">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">2017/7/7</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">11:07:45</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">00:00:01</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3"><a href="file:///F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc" class="file"><acronym title="F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc">F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td Style="Width:30%">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations</td>
+<td class="DRC_summary_header_col2">:</td>
+<td class="DRC_summary_header_col3" style="color : red">90</td></tr>
+</table>
+</td>
+</table>
+<hr><a name="IDMUVKJ204LUGKHRBL1FSRVXPWUBPCPKJJIQSODYHN5IKCEAMG0E4B"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID4UEUOKRIWNW2GP3M2Z34PQHWSLE4KJXCO2CDMOLH4ZTLPZSG0QZE">Clearance Constraint (Gap=5mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID2NEJWVU1A3GCOMP2M5PN53AN0M2IOK42ED0CQMY4QRHNS12RQPD">Width Constraint (Min=15mil) (Max=25mil) (Preferred=20mil) (InNet('VCC5'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDOKR5EHYWFKHHLI4G03WMTXY0GIUY1VXSFP1LIHEWFHMU1BLHMXCI">Net Antennae (Tolerance=0mil) (All)</a></td>
+<td class="column2">1</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDLEOQMVKTZGEELJEYGCYFLUWTOBHYEVAI0VC20TMXFGZENDV0TDJL">Silk to Silk (Clearance=1mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID5ELIGO4SM0HOGLEVU2DKZGPUAKHPVUVZ5JBGRMORRA1D3VVLUHRD">Silkscreen Over Component Pads (Clearance=1mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDEGX14JPFY1LH4C5QK2ZEMCZDE0GM4TBK1TNTABY2XJ0TJT5VQAG">Minimum Solder Mask Sliver (Gap=10mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDUATSIU54R003O2IJW45O5XEBSJDTFXAZA33HHHECZLMQZQFR13XI">Hole To Hole Clearance (Gap=10mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDWUM0K1TUUUKTCB4GNIVIBNEQVEBM5PVYKZFVHBEJBJ3KOCWKXZLN">Hole Size Constraint (Min=1mil) (Max=100mil) (All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDBF53BPAAGC0OEMZ5P3C2YBS3ND0IRW0ZUEQBIUEENEJFPDNJZ4DI">Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID44XVU2TJW3QJEEHTCJ2KOVXCGPYZAX2SWMQ44BELIOLGCMBKZBP">Width Constraint (Min=25mil) (Max=30mil) (Preferred=25mil) (InNet('VCC12'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDAKHWG50WZ43ZFQL5JQVSFQ01BMNI4Q5MKMQ4Y1OTW21BXLQ5X23B">Power Plane Connect Rule(Relief Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDMMACFJKQFN3NEJKMR3AZXZ5E0G3EPS13LW1VJU002KUMOQZESXI">Clearance Constraint (Gap=6mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDQL5EMN04TD1RGHM2BY2D1WHRHZ5HBTV0LS1UWJ3TC0HEDMWP5JE">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">85</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDN143UNGDWGD5NWWUZ51IVCXNI2TBAK2FGRL1MBG1BYXIS1NM2DH">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDPE4UWYLXL33NIUFYHM3JCW0VLOG41MQ3PAAYSHH0GVLRMWYSXWI">Width Constraint (Min=15mil) (Max=15mil) (Preferred=15mil) (InNet('VCC3.3'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID1CNDD1HT3I3KEQDKBHNAMY4K5DDRI5UTFTXH1PP0ECXFTYVKK1XN">Width Constraint (Min=10mil) (Max=393.701mil) (Preferred=15mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">90</td>
+</tr>
+</table><br><hr><a name="IDOKR5EHYWFKHHLI4G03WMTXY0GIUY1VXSFP1LIHEWFHMU1BLHMXCI"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Net Antennae (Tolerance=0mil) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18176.5mil|Location2.X=18210.973mil|Location1.Y=6671.5mil|Location2.Y=6723.65mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18176.5mil|Location2.X=18210.973mil|Location1.Y=6671.5mil|Location2.Y=6723.65mil|Absolute=True">Net Antennae: Track (18130mil,6685mil)(18190mil,6685mil)  Top Layer</acronym></a><br></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDWUM0K1TUUUKTCB4GNIVIBNEQVEBM5PVYKZFVHBEJBJ3KOCWKXZLN"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole Size Constraint (Min=1mil) (Max=100mil) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14114.32mil|Location2.X=14233.68mil|Location1.Y=9835.32mil|Location2.Y=9954.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14114.32mil|Location2.X=14233.68mil|Location1.Y=9835.32mil|Location2.Y=9954.68mil|Absolute=True">Hole Size Constraint (118.11mil &gt; 100mil) : Via (14174mil,9895mil) Top Layer to Bottom Layer</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18330.32mil|Location2.X=18449.68mil|Location1.Y=9817.32mil|Location2.Y=9936.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18330.32mil|Location2.X=18449.68mil|Location1.Y=9817.32mil|Location2.Y=9936.68mil|Absolute=True">Hole Size Constraint (118.11mil &gt; 100mil) : Via (18390mil,9877mil) Top Layer to Bottom Layer</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18336.32mil|Location2.X=18455.68mil|Location1.Y=3485.32mil|Location2.Y=3604.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18336.32mil|Location2.X=18455.68mil|Location1.Y=3485.32mil|Location2.Y=3604.68mil|Absolute=True">Hole Size Constraint (118.11mil &gt; 100mil) : Via (18396mil,3545mil) Top Layer to Bottom Layer</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14112.32mil|Location2.X=14231.68mil|Location1.Y=3483.32mil|Location2.Y=3602.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14112.32mil|Location2.X=14231.68mil|Location1.Y=3483.32mil|Location2.Y=3602.68mil|Absolute=True">Hole Size Constraint (118.11mil &gt; 100mil) : Via (14172mil,3543mil) Top Layer to Bottom Layer</acronym></a><br></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><a name="IDQL5EMN04TD1RGHM2BY2D1WHRHZ5HBTV0LS1UWJ3TC0HEDMWP5JE"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Un-Routed Net Constraint ( (All) )</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15965.936mil|Location2.X=16078.936mil|Location1.Y=4411.5mil|Location2.Y=4449.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15965.936mil|Location2.X=16078.936mil|Location1.Y=4411.5mil|Location2.Y=4449.5mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C4-2 (15984.936,4430.5mil) And Pad C3-2 (16059.936,4430.5mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16734.936mil|Location2.X=16850.936mil|Location1.Y=4416.5mil|Location2.Y=4458.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16734.936mil|Location2.X=16850.936mil|Location1.Y=4416.5mil|Location2.Y=4458.5mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C1-2 (16753.936,4435.5mil) And Pad C2-2 (16831.936,4439.5mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15283.472mil|Location2.X=15350.528mil|Location1.Y=4891.472mil|Location2.Y=5058.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15283.472mil|Location2.X=15350.528mil|Location1.Y=4891.472mil|Location2.Y=5058.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad I2C-28 (15317,4925mil) And Pad I2C-29 (15317,5025mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15283.472mil|Location2.X=15350.528mil|Location1.Y=4691.472mil|Location2.Y=4858.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15283.472mil|Location2.X=15350.528mil|Location1.Y=4691.472mil|Location2.Y=4858.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad I2C-26 (15317,4725mil) And Pad I2C-27 (15317,4825mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16554.472mil|Location2.X=16621.528mil|Location1.Y=3773.472mil|Location2.Y=3940.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16554.472mil|Location2.X=16621.528mil|Location1.Y=3773.472mil|Location2.Y=3940.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad SP1-2 (16588,3807mil) And Pad SP1-7 (16588,3907mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15283.472mil|Location2.X=15350.528mil|Location1.Y=4991.472mil|Location2.Y=5158.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15283.472mil|Location2.X=15350.528mil|Location1.Y=4991.472mil|Location2.Y=5158.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad I2C-29 (15317,5025mil) And Pad I2C-30 (15317,5125mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17872mil|Location2.X=18040mil|Location1.Y=4647mil|Location2.Y=4715mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17872mil|Location2.X=18040mil|Location1.Y=4647mil|Location2.Y=4715mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad MP-5 (17906,4681mil) And Pad MP-6 (18006,4681mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17872mil|Location2.X=18040mil|Location1.Y=3892mil|Location2.Y=3960mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17872mil|Location2.X=18040mil|Location1.Y=3892mil|Location2.Y=3960mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad MP-4 (17906,3926mil) And Pad MP-3 (18006,3926mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8005.472mil|Location2.Y=8172.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8005.472mil|Location2.Y=8172.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad uart-27 (17493,8039mil) And Pad uart-23 (17493,8139mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8205.472mil|Location2.Y=8372.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8205.472mil|Location2.Y=8372.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad uart-19 (17493,8239mil) And Pad uart-15 (17493,8339mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8505.472mil|Location2.Y=8672.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8505.472mil|Location2.Y=8672.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad uart-7 (17493,8539mil) And Pad uart-3 (17493,8639mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14856mil|Location2.X=15026mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14856mil|Location2.X=15026mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad JTAG-10 (14891,3804mil) And Pad JTAG-8 (14991,3804mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14956mil|Location2.X=15126mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14956mil|Location2.X=15126mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad JTAG-8 (14991,3804mil) And Pad JTAG-6 (15091,3804mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14656mil|Location2.X=14826mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14656mil|Location2.X=14826mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad JTAG-14 (14691,3804mil) And Pad JTAG-12 (14791,3804mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14356mil|Location2.X=14526mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14356mil|Location2.X=14526mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad JTAG-20 (14391,3804mil) And Pad JTAG-18 (14491,3804mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14556mil|Location2.X=14726mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14556mil|Location2.X=14726mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad JTAG-16 (14591,3804mil) And Pad JTAG-14 (14691,3804mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8305.472mil|Location2.Y=8472.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8305.472mil|Location2.Y=8472.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad uart-15 (17493,8339mil) And Pad uart-11 (17493,8439mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15848.472mil|Location2.X=16015.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15848.472mil|Location2.X=16015.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad S10-10 (15882,3730mil) And Pad S10-13 (15982,3730mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15548.472mil|Location2.X=15715.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15548.472mil|Location2.X=15715.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad S10-1 (15582,3730mil) And Pad S10-4 (15682,3730mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16048.472mil|Location2.X=16215.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16048.472mil|Location2.X=16215.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad S10-16 (16082,3730mil) And Pad S10-19 (16182,3730mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16148.472mil|Location2.X=16315.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16148.472mil|Location2.X=16315.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad S10-19 (16182,3730mil) And Pad S10-22 (16282,3730mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15056mil|Location2.X=15226mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15056mil|Location2.X=15226mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad JTAG-6 (15091,3804mil) And Pad JTAG-4 (15191,3804mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15748.472mil|Location2.X=15915.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15748.472mil|Location2.X=15915.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad S10-7 (15782,3730mil) And Pad S10-10 (15882,3730mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17150mil|Location2.X=17220mil|Location1.Y=3925.064mil|Location2.Y=4099.064mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17150mil|Location2.X=17220mil|Location1.Y=3925.064mil|Location2.Y=4099.064mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C9-2 (17184,4070.064mil) And Pad C10-2 (17186,3954.064mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14187.936mil|Location2.X=14371.936mil|Location1.Y=8816mil|Location2.Y=8884mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14187.936mil|Location2.X=14371.936mil|Location1.Y=8816mil|Location2.Y=8884mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C7-2 (14216.936,8850mil) And Pad C8-2 (14342.936,8850mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16040.936mil|Location2.X=16235mil|Location1.Y=4411.5mil|Location2.Y=4517.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16040.936mil|Location2.X=16235mil|Location1.Y=4411.5mil|Location2.Y=4517.5mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C3-2 (16059.936,4430.5mil) And Pad AMS-3.3-3 (16191,4476mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16812.936mil|Location2.X=17035mil|Location1.Y=4420.5mil|Location2.Y=4517.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16812.936mil|Location2.X=17035mil|Location1.Y=4420.5mil|Location2.Y=4517.5mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C2-2 (16831.936,4439.5mil) And Pad AMS-3.3-2 (16991,4476mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17284mil|Location2.X=17372mil|Location1.Y=5482mil|Location2.Y=5740mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17284mil|Location2.X=17372mil|Location1.Y=5482mil|Location2.Y=5740mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad PC817-2-4 (17328,5511mil) And Pad PC817-2-2 (17328,5711mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17208mil|Location2.X=17408mil|Location1.Y=6671mil|Location2.Y=7071mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17208mil|Location2.X=17408mil|Location1.Y=6671mil|Location2.Y=7071mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad PC817-1-4 (17308,6771mil) And Track on layer Top Layer (17308,6971mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17584mil|Location2.X=17672mil|Location1.Y=5482mil|Location2.Y=5740mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17584mil|Location2.X=17672mil|Location1.Y=5482mil|Location2.Y=5740mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad PC817-2-5 (17628,5511mil) And Pad PC817-2-7 (17628,5711mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17957mil|Location2.X=18157mil|Location1.Y=5010mil|Location2.Y=5410mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17957mil|Location2.X=18157mil|Location1.Y=5010mil|Location2.Y=5410mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad TB6600-3-2 (18057,5110mil) And Track on layer Top Layer (18057,5310mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18052mil|Location2.X=18120mil|Location1.Y=8261mil|Location2.Y=8529mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18052mil|Location2.X=18120mil|Location1.Y=8261mil|Location2.Y=8529mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad TB6600-1-2 (18086,8295mil) And Pad TB6600-1-4 (18086,8495mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18052mil|Location2.X=18120mil|Location1.Y=8461mil|Location2.Y=8729mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18052mil|Location2.X=18120mil|Location1.Y=8461mil|Location2.Y=8729mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad TB6600-1-4 (18086,8495mil) And Pad TB6600-1-6 (18086,8695mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18096mil|Location2.X=18164mil|Location1.Y=6651mil|Location2.Y=6919mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18096mil|Location2.X=18164mil|Location1.Y=6651mil|Location2.Y=6919mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad TB6600-2-2 (18130,6685mil) And Pad TB6600-2-4 (18130,6885mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17150mil|Location2.X=17348mil|Location1.Y=4041.064mil|Location2.Y=4210mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17150mil|Location2.X=17348mil|Location1.Y=4041.064mil|Location2.Y=4210mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C9-2 (17184,4070.064mil) And Pad PC817-3-4 (17304,4181mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17957mil|Location2.X=18402mil|Location1.Y=5410mil|Location2.Y=5605mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17957mil|Location2.X=18402mil|Location1.Y=5410mil|Location2.Y=5605mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Track on layer Top Layer (18057,5510mil) And Pad DRV3-15 (18302,5505mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18078mil|Location2.X=18470mil|Location1.Y=6937mil|Location2.Y=7205mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18078mil|Location2.X=18470mil|Location1.Y=6937mil|Location2.Y=7205mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Track on layer Top Layer (18178,7037mil) And Track on layer Bottom Layer (18370,7105mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17986mil|Location2.X=18421mil|Location1.Y=8595mil|Location2.Y=8825mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17986mil|Location2.X=18421mil|Location1.Y=8595mil|Location2.Y=8825mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad TB6600-1-6 (18086,8695mil) And Track on layer Top Layer (18321,8725mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15406.472mil|Location2.X=15779mil|Location1.Y=6306mil|Location2.Y=6374mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15406.472mil|Location2.X=15779mil|Location1.Y=6306mil|Location2.Y=6374mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad P3-27 (15440,6340mil) And Pad RCT6-27 (15745,6340mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17925mil|Location2.X=18157mil|Location1.Y=5711mil|Location2.Y=5610mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17925mil|Location2.X=18157mil|Location1.Y=5711mil|Location2.Y=5610mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad PDRV3-1 (18025,5811mil) And Track on layer Top Layer (18057,5510mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17728.252mil|Location2.X=17940mil|Location1.Y=3718.252mil|Location2.Y=3960mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17728.252mil|Location2.X=17940mil|Location1.Y=3718.252mil|Location2.Y=3960mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Via (17748,3738mil) And Pad MP-4 (17906,3926mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18090mil|Location2.X=18470mil|Location1.Y=6585mil|Location2.Y=6605mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18090mil|Location2.X=18470mil|Location1.Y=6585mil|Location2.Y=6605mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Track on layer Top Layer (18190,6685mil) And Pad DRV2-9 (18370,6505mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18021mil|Location2.X=18120mil|Location1.Y=8661mil|Location2.Y=9089mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18021mil|Location2.X=18120mil|Location1.Y=8661mil|Location2.Y=9089mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad PDRV1-1 (18065,9045mil) And Pad TB6600-1-6 (18086,8695mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14779mil|Location2.X=15017mil|Location1.Y=5359mil|Location2.Y=5225mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14779mil|Location2.X=15017mil|Location1.Y=5359mil|Location2.Y=5225mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad TB6612-1-8 (14879,5459mil) And Track on layer Bottom Layer (14917,5125mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17970mil|Location2.X=18230mil|Location1.Y=7325mil|Location2.Y=7185mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17970mil|Location2.X=18230mil|Location1.Y=7325mil|Location2.Y=7185mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad PDRV2-1 (18070,7425mil) And Track on layer Top Layer (18130,7085mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18052mil|Location2.X=18355mil|Location1.Y=8091mil|Location2.Y=8329mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18052mil|Location2.X=18355mil|Location1.Y=8091mil|Location2.Y=8329mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad TB6600-1-2 (18086,8295mil) And Pad DRV1-9 (18321,8125mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15985mil|Location2.X=16185mil|Location1.Y=7880mil|Location2.Y=8520mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15985mil|Location2.X=16185mil|Location1.Y=7880mil|Location2.Y=8520mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad Potentiometer6-3 (16085,7980mil) And Track on layer Bottom Layer (16085,8420mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15353mil|Location2.X=15895mil|Location1.Y=7773mil|Location2.Y=8080mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15353mil|Location2.X=15895mil|Location1.Y=7773mil|Location2.Y=8080mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad TB6612-2-9 (15453,7873mil) And Track on layer Top Layer (15795,7980mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18023mil|Location2.X=18336mil|Location1.Y=4871mil|Location2.Y=5144mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=18023mil|Location2.X=18336mil|Location1.Y=4871mil|Location2.Y=5144mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad TB6600-3-2 (18057,5110mil) And Pad DRV3-9 (18302,4905mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17955mil|Location2.X=18069mil|Location1.Y=5767mil|Location2.Y=6295mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17955mil|Location2.X=18069mil|Location1.Y=5767mil|Location2.Y=6295mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C12-2 (17989,6261mil) And Pad PDRV3-1 (18025,5811mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15283.472mil|Location2.X=15513mil|Location1.Y=5091.472mil|Location2.Y=5493mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15283.472mil|Location2.X=15513mil|Location1.Y=5091.472mil|Location2.Y=5493mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad I2C-30 (15317,5125mil) And Pad TB6612-1-9 (15479,5459mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17954mil|Location2.X=18120mil|Location1.Y=7847mil|Location2.Y=8329mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17954mil|Location2.X=18120mil|Location1.Y=7847mil|Location2.Y=8329mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C11-2 (17988,7881mil) And Pad TB6600-1-2 (18086,8295mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14563mil|Location2.X=14887mil|Location1.Y=7839mil|Location2.Y=8212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14563mil|Location2.X=14887mil|Location1.Y=7839mil|Location2.Y=8212mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad M3-5 (14597,8178mil) And Pad TB6612-2-8 (14853,7873mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14500mil|Location2.X=14953mil|Location1.Y=7320mil|Location2.Y=7973mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14500mil|Location2.X=14953mil|Location1.Y=7320mil|Location2.Y=7973mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Track on layer Top Layer (14600,7420mil) And Pad TB6612-2-8 (14853,7873mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14487mil|Location2.X=14713mil|Location1.Y=6563mil|Location2.Y=6059mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14487mil|Location2.X=14713mil|Location1.Y=6563mil|Location2.Y=6059mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad M1-5 (14587,6663mil) And Track on layer Bottom Layer (14613,5959mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15711mil|Location2.X=15984mil|Location1.Y=5748mil|Location2.Y=6374mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15711mil|Location2.X=15984mil|Location1.Y=5748mil|Location2.Y=6374mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad RCT6-27 (15745,6340mil) And Pad KEY-14 (15950,5782mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16194mil|Location2.X=16470mil|Location1.Y=9289mil|Location2.Y=8520mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16194mil|Location2.X=16470mil|Location1.Y=9289mil|Location2.Y=8520mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C5-2 (16294,9389mil) And Track on layer Top Layer (16370,8420mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14313.936mil|Location2.X=15055mil|Location1.Y=8816mil|Location2.Y=9815mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14313.936mil|Location2.X=15055mil|Location1.Y=8816mil|Location2.Y=9815mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C8-2 (14342.936,8850mil) And Pad OLED-2 (15021,9781mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15283.472mil|Location2.X=15350.528mil|Location1.Y=4791.472mil|Location2.Y=4958.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15283.472mil|Location2.X=15350.528mil|Location1.Y=4791.472mil|Location2.Y=4958.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad I2C-27 (15317,4825mil) And Pad I2C-28 (15317,4925mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8105.472mil|Location2.Y=8272.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8105.472mil|Location2.Y=8272.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad uart-23 (17493,8139mil) And Pad uart-19 (17493,8239mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8405.472mil|Location2.Y=8572.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=17526.528mil|Location1.Y=8405.472mil|Location2.Y=8572.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad uart-11 (17493,8439mil) And Pad uart-7 (17493,8539mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15948.472mil|Location2.X=16115.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15948.472mil|Location2.X=16115.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad S10-13 (15982,3730mil) And Pad S10-16 (16082,3730mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14756mil|Location2.X=14926mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14756mil|Location2.X=14926mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad JTAG-12 (14791,3804mil) And Pad JTAG-10 (14891,3804mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14456mil|Location2.X=14626mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14456mil|Location2.X=14626mil|Location1.Y=3769mil|Location2.Y=3839mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad JTAG-18 (14491,3804mil) And Pad JTAG-16 (14591,3804mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15648.472mil|Location2.X=15815.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15648.472mil|Location2.X=15815.528mil|Location1.Y=3696.472mil|Location2.Y=3763.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad S10-4 (15682,3730mil) And Pad S10-7 (15782,3730mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17284mil|Location2.X=17672mil|Location1.Y=5682mil|Location2.Y=5740mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17284mil|Location2.X=17672mil|Location1.Y=5682mil|Location2.Y=5740mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad PC817-2-2 (17328,5711mil) And Pad PC817-2-7 (17628,5711mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16248.472mil|Location2.X=16621.528mil|Location1.Y=3696.472mil|Location2.Y=3840.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16248.472mil|Location2.X=16621.528mil|Location1.Y=3696.472mil|Location2.Y=3840.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad S10-22 (16282,3730mil) And Pad SP1-2 (16588,3807mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14817mil|Location2.X=15417mil|Location1.Y=4625mil|Location2.Y=4825mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14817mil|Location2.X=15417mil|Location1.Y=4625mil|Location2.Y=4825mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Track on layer Bottom Layer (14917,4725mil) And Pad I2C-26 (15317,4725mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16947mil|Location2.X=17348mil|Location1.Y=4352mil|Location2.Y=4517.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16947mil|Location2.X=17348mil|Location1.Y=4352mil|Location2.Y=4517.5mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad AMS-3.3-2 (16991,4476mil) And Pad PC817-3-2 (17304,4381mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17528mil|Location2.X=18109mil|Location1.Y=5411mil|Location2.Y=5562mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17528mil|Location2.X=18109mil|Location1.Y=5411mil|Location2.Y=5562mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad PC817-2-5 (17628,5511mil) And Track on layer Top Layer (18009,5462mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17504mil|Location2.X=17723mil|Location1.Y=4081mil|Location2.Y=3839mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17504mil|Location2.X=17723mil|Location1.Y=4081mil|Location2.Y=3839mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Track on layer Top Layer (17604,4181mil) And Via (17623,3739mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17972mil|Location2.X=18091mil|Location1.Y=4647mil|Location2.Y=5144mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17972mil|Location2.X=18091mil|Location1.Y=4647mil|Location2.Y=5144mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad MP-6 (18006,4681mil) And Pad TB6600-3-2 (18057,5110mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17954mil|Location2.X=18114mil|Location1.Y=7381mil|Location2.Y=7915mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17954mil|Location2.X=18114mil|Location1.Y=7381mil|Location2.Y=7915mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C11-2 (17988,7881mil) And Pad PDRV2-1 (18070,7425mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14819mil|Location2.X=15487mil|Location1.Y=7839mil|Location2.Y=7907mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14819mil|Location2.X=15487mil|Location1.Y=7839mil|Location2.Y=7907mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad TB6612-2-8 (14853,7873mil) And Pad TB6612-2-9 (15453,7873mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16147mil|Location2.X=16772.936mil|Location1.Y=4416.5mil|Location2.Y=4517.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16147mil|Location2.X=16772.936mil|Location1.Y=4416.5mil|Location2.Y=4517.5mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad AMS-3.3-3 (16191,4476mil) And Pad C1-2 (16753.936,4435.5mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17508mil|Location2.X=18230mil|Location1.Y=6671mil|Location2.Y=6785mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17508mil|Location2.X=18230mil|Location1.Y=6671mil|Location2.Y=6785mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Track on layer Top Layer (17608,6771mil) And Pad TB6600-2-2 (18130,6685mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15445mil|Location2.X=15984mil|Location1.Y=5425mil|Location2.Y=5816mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15445mil|Location2.X=15984mil|Location1.Y=5425mil|Location2.Y=5816mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad TB6612-1-9 (15479,5459mil) And Pad KEY-14 (15950,5782mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14313.936mil|Location2.X=14631mil|Location1.Y=8144mil|Location2.Y=8884mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14313.936mil|Location2.X=14631mil|Location1.Y=8144mil|Location2.Y=8884mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C8-2 (14342.936,8850mil) And Pad M3-5 (14597,8178mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15156mil|Location2.X=15615.528mil|Location1.Y=3696.472mil|Location2.Y=3839mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=15156mil|Location2.X=15615.528mil|Location1.Y=3696.472mil|Location2.Y=3839mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad JTAG-4 (15191,3804mil) And Pad S10-1 (15582,3730mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17955mil|Location2.X=18164mil|Location1.Y=6227mil|Location2.Y=6719mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17955mil|Location2.X=18164mil|Location1.Y=6227mil|Location2.Y=6719mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad C12-2 (17989,6261mil) And Pad TB6600-2-2 (18130,6685mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17504mil|Location2.X=18006mil|Location1.Y=4281mil|Location2.Y=4781mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17504mil|Location2.X=18006mil|Location1.Y=4281mil|Location2.Y=4781mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Track on layer Top Layer (17604,4381mil) And Pad MP-5 (17906,4681mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=18120mil|Location1.Y=8261mil|Location2.Y=8372.528mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=17459.472mil|Location2.X=18120mil|Location1.Y=8261mil|Location2.Y=8372.528mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad uart-15 (17493,8339mil) And Pad TB6600-1-2 (18086,8295mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14487mil|Location2.X=14700mil|Location1.Y=6563mil|Location2.Y=7520mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=14487mil|Location2.X=14700mil|Location1.Y=6563mil|Location2.Y=7520mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad M1-5 (14587,6663mil) And Track on layer Top Layer (14600,7420mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16554.472mil|Location2.X=17220mil|Location1.Y=3873.472mil|Location2.Y=3983.064mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16554.472mil|Location2.X=17220mil|Location1.Y=3873.472mil|Location2.Y=3983.064mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Pad SP1-7 (16588,3907mil) And Pad C10-2 (17186,3954.064mil)</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16590mil|Location2.X=17593mil|Location1.Y=8325mil|Location2.Y=8539mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=F:\cast\nuedc_2017\基板设计\baseControl.~(38).~(49).PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=16590mil|Location2.X=17593mil|Location1.Y=8325mil|Location2.Y=8539mil|Absolute=True">Un-Routed Net Constraint: Net GND Between Track on layer Top Layer (16690,8425mil) And Pad uart-11 (17493,8439mil)</acronym></a><br></td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br></body>
+</html>

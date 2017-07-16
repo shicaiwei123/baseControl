@@ -1,0 +1,999 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 { 
+			font-family : sans-serif;
+			color : white;
+			background-color : #21489e;
+			padding: 0.3em;
+		}
+		body { 
+			font-family : verdana;
+		}
+		td, th {  
+			padding: 0.5em;
+			text-align : center;
+			width : 18%;	
+		}
+		th { 
+			background-color : #A6CAF0;
+		
+		}
+		th.column1, td.column1 { 
+			text-align: left;
+			width : auto; 
+		}
+		table { 
+			width : 100%; 
+		}
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3 {
+			padding-top : 0.1em;
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width : auto;
+			vertical-align: top
+		}
+		.front_matter_column1 {
+			text-align : right;
+		}
+		.total_column1, .total_column {
+			font-weight : bold;	
+		}
+		.total_column1 {
+			text-align : right;
+		}
+		.front_matter_column2 {
+			text-align : center;
+		}
+		.front_matter_column3 {
+			text-align : left;
+		}
+		.warning, .error { 
+			color : red;
+			font-weight : bold;
+		}	
+		tr.onmouseout_odd { 
+			background-color : #EEEEE0 
+		}
+		tr.onmouseout_even { 
+			background-color : #F3F3E3   
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : lightYellow 
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #008000 
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+			
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);		
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {	
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}	
+	</script><title>Footprint Comparison Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://D:\A\Templates\AD-rgb_logo_223x64.gif
+		"><a href="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports" class="customize"><acronym title="dxpprocess://Client:SetupPreferences?Server=PCB|PageName=Reports">customize</acronym></a><h1>Footprint Comparison Report</h1>
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">2017/6/24</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">22:19:21</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3">00:00:00</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename</td>
+<td class="front_matter_column2">:</td>
+<td class="front_matter_column3"><a href="file:///F:\cast\nuedc_2017\%E5%9F%BA%E6%9D%BF%E8%AE%BE%E8%AE%A1\baseControl.~(38).PcbDoc" class="file"><acronym title="F:\cast\nuedc_2017\基板设计\baseControl.~(38).PcbDoc">F:\cast\nuedc_2017\基板设计\baseControl.~(38).PcbDoc</acronym></a></td>
+</tr>
+</table>
+<hr><a name="IDWVWSF4J0LCC1C2B41IKOGEKMLIATBIA3UZCOUPPUA3SI30WWVEAD"><h2>Contents</h2></a><p class="contents_level1"><a href="#IDWVWSF4J0LCC1C2B41IKOGEKMLIATBIA3UZCOUPPUA3SI30WWVEAD">Contents</a></p>
+<p class="contents_level1"><a href="#ID0JGTHKXYAKABCIIDFMTMRVJEZOICG45GOQV5JKK3TK33J531ZFOI">Components Status Summary</a></p>
+<p class="contents_level2"><a href="#IDWMYRZMWYDM0MDCD412UQKJ0F4MVAA4GTMLNIIHEJFUQY5EA1BRJB">Unmatched Components List<br></a></p>
+<p class="contents_level2"><a href="#IDHUXHWPK4RSJIYMZBB4GGUX4SGBBWIAP4BXFVQEPGNLHW4ZPMR4C">Matched Components List<br></a></p>
+<p class="contents_level2"><a href="#IDGJBHJ4TCQK5BPRHPF5U3VTMOEBTKQKHEWRXI2FIY5WVWN0D0QAOM">Footprints Not Found<br></a></p>
+<p class="contents_level1"><a href="#IDUOF4AZ0WY0RCBXPA2XBE103HKPT0KOYB1BV5RBNT2NHRMVK0LM2D">Components Details</a></p>
+<p class="contents_level2"><a href="#IDSUHYZTJN2LZ2EWMJ2JHJTB2SWKMDXEALEW0VTOHYW5SIZ2QPO1IG">PCB Difference Details<br></a></p><br><hr><a name="ID0JGTHKXYAKABCIIDFMTMRVJEZOICG45GOQV5JKK3TK33J531ZFOI"><h2>Components Status Summary</h2></a><h2>Unmatched Components List</h2><a name="IDWMYRZMWYDM0MDCD412UQKJ0F4MVAA4GTMLNIIHEJFUQY5EA1BRJB"><table>
+<tr>
+<th class="column1">Designator</th>
+<th class="column2">Footprint</th>
+<th class="column3">Footprint reference</th>
+<th class="column4">Path to reference Library</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">AMS-3.3</td>
+<td style="Width:20%" class="column2">AMS1117-3.3</td>
+<td style="Width:20%" class="column3">AMS1117-3.3</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">DRV1</td>
+<td style="Width:20%" class="column2">DRV8825</td>
+<td style="Width:20%" class="column3">DRV8825</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">DRV2</td>
+<td style="Width:20%" class="column2">DRV8825</td>
+<td style="Width:20%" class="column3">DRV8825</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">DRV3</td>
+<td style="Width:20%" class="column2">DRV8825</td>
+<td style="Width:20%" class="column3">DRV8825</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">E1A</td>
+<td style="Width:20%" class="column2">HDR2X3_CEN</td>
+<td style="Width:20%" class="column3">HDR2X3_CEN</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">E1B</td>
+<td style="Width:20%" class="column2">HDR2X3_CEN</td>
+<td style="Width:20%" class="column3">HDR2X3_CEN</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">E2A</td>
+<td style="Width:20%" class="column2">HDR2X3_CEN</td>
+<td style="Width:20%" class="column3">HDR2X3_CEN</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">E2B</td>
+<td style="Width:20%" class="column2">HDR2X3_CEN</td>
+<td style="Width:20%" class="column3">HDR2X3_CEN</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">encoder1</td>
+<td style="Width:20%" class="column2">XH-4-254</td>
+<td style="Width:20%" class="column3">XH-4-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">encoder2</td>
+<td style="Width:20%" class="column2">XH-4-254</td>
+<td style="Width:20%" class="column3">XH-4-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">M1</td>
+<td style="Width:20%" class="column2">XH-6-254</td>
+<td style="Width:20%" class="column3">XH-6-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">M2</td>
+<td style="Width:20%" class="column2">XH-6-254</td>
+<td style="Width:20%" class="column3">XH-6-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">M3</td>
+<td style="Width:20%" class="column2">XH-6-254</td>
+<td style="Width:20%" class="column3">XH-6-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">M4</td>
+<td style="Width:20%" class="column2">XH-6-254</td>
+<td style="Width:20%" class="column3">XH-6-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">MP</td>
+<td style="Width:20%" class="column2">MP1584EN</td>
+<td style="Width:20%" class="column3">MP1584EN</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">PC8171</td>
+<td style="Width:20%" class="column2">DIP4</td>
+<td style="Width:20%" class="column3">DIP4</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">PC8172</td>
+<td style="Width:20%" class="column2">DIP4</td>
+<td style="Width:20%" class="column3">DIP4</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">PC8173</td>
+<td style="Width:20%" class="column2">DIP4</td>
+<td style="Width:20%" class="column3">DIP4</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">PI2C1</td>
+<td style="Width:20%" class="column2">HDR1X3</td>
+<td style="Width:20%" class="column3">HDR1X3</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">P2</td>
+<td style="Width:20%" class="column2">HDR1X3</td>
+<td style="Width:20%" class="column3">HDR1X3</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">P3</td>
+<td style="Width:20%" class="column2">HDR1X3</td>
+<td style="Width:20%" class="column3">HDR1X3</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">P4</td>
+<td style="Width:20%" class="column2">HDR1X3</td>
+<td style="Width:20%" class="column3">HDR1X3</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">P5</td>
+<td style="Width:20%" class="column2">HDR1X3</td>
+<td style="Width:20%" class="column3">HDR1X3</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">RS</td>
+<td style="Width:20%" class="column2">HDR1X4</td>
+<td style="Width:20%" class="column3">HDR1X4</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">stepmotor1</td>
+<td style="Width:20%" class="column2">XH-4-254</td>
+<td style="Width:20%" class="column3">XH-4-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">stepmotor2</td>
+<td style="Width:20%" class="column2">XH-4-254</td>
+<td style="Width:20%" class="column3">XH-4-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">stepmotor3</td>
+<td style="Width:20%" class="column2">XH-4-254</td>
+<td style="Width:20%" class="column3">XH-4-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">SW1</td>
+<td style="Width:20%" class="column2">SW_DIP3</td>
+<td style="Width:20%" class="column3">SW_DIP3</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">SW2</td>
+<td style="Width:20%" class="column2">SW_DIP3</td>
+<td style="Width:20%" class="column3">SW_DIP3</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">SW3</td>
+<td style="Width:20%" class="column2">SW_DIP3</td>
+<td style="Width:20%" class="column3">SW_DIP3</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">TB66001</td>
+<td style="Width:20%" class="column2">XH-6-254</td>
+<td style="Width:20%" class="column3">XH-6-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">TB66002</td>
+<td style="Width:20%" class="column2">XH-6-254</td>
+<td style="Width:20%" class="column3">XH-6-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">TB66003</td>
+<td style="Width:20%" class="column2">XH-6-254</td>
+<td style="Width:20%" class="column3">XH-6-254</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">TB66122</td>
+<td style="Width:20%" class="column2">TB6612</td>
+<td style="Width:20%" class="column3">TB6612</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">Uart</td>
+<td style="Width:20%" class="column2">uartModel</td>
+<td style="Width:20%" class="column3">uartModel</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">Uart2</td>
+<td style="Width:20%" class="column2">uart</td>
+<td style="Width:20%" class="column3">uart</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">Uart3</td>
+<td style="Width:20%" class="column2">uart</td>
+<td style="Width:20%" class="column3">uart</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">Uart4</td>
+<td style="Width:20%" class="column2">uart</td>
+<td style="Width:20%" class="column3">uart</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">Uart5</td>
+<td style="Width:20%" class="column2">uart</td>
+<td style="Width:20%" class="column3">uart</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><h2>Matched Components List</h2><a name="IDHUXHWPK4RSJIYMZBB4GGUX4SGBBWIAP4BXFVQEPGNLHW4ZPMR4C"><table>
+<tr>
+<th class="column1">Designator</th>
+<th class="column2">Footprint</th>
+<th class="column3">Footprint reference</th>
+<th class="column4">Footprint to reference Library</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">C1</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">C2</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">C3</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">C4</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">C5</td>
+<td style="Width:20%" class="column2">钽电容E</td>
+<td style="Width:20%" class="column3">钽电容E</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">C7</td>
+<td style="Width:20%" class="column2">0805</td>
+<td style="Width:20%" class="column3">0805</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">C8</td>
+<td style="Width:20%" class="column2">0805</td>
+<td style="Width:20%" class="column3">0805</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">C9</td>
+<td style="Width:20%" class="column2">0805</td>
+<td style="Width:20%" class="column3">0805</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">C10</td>
+<td style="Width:20%" class="column2">0805</td>
+<td style="Width:20%" class="column3">0805</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">C11</td>
+<td style="Width:20%" class="column2">钽电容E</td>
+<td style="Width:20%" class="column3">钽电容E</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">C12</td>
+<td style="Width:20%" class="column2">钽电容E</td>
+<td style="Width:20%" class="column3">钽电容E</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">I2C2</td>
+<td style="Width:20%" class="column2">HDR1X4</td>
+<td style="Width:20%" class="column3">HDR1X4</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">JTAG</td>
+<td style="Width:20%" class="column2">JTAG_20</td>
+<td style="Width:20%" class="column3">JTAG_20</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">KEY</td>
+<td style="Width:20%" class="column2">KEY</td>
+<td style="Width:20%" class="column3">KEY</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">KEYT1</td>
+<td style="Width:20%" class="column2">KEY_M</td>
+<td style="Width:20%" class="column3">KEY_M</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">KEYT2</td>
+<td style="Width:20%" class="column2">KEY_M</td>
+<td style="Width:20%" class="column3">KEY_M</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">KEYT3</td>
+<td style="Width:20%" class="column2">KEY_M</td>
+<td style="Width:20%" class="column3">KEY_M</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">LO1</td>
+<td style="Width:20%" class="column2">VIA</td>
+<td style="Width:20%" class="column3">VIA</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">LO2</td>
+<td style="Width:20%" class="column2">VIA</td>
+<td style="Width:20%" class="column3">VIA</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">LO3</td>
+<td style="Width:20%" class="column2">VIA</td>
+<td style="Width:20%" class="column3">VIA</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">LO4</td>
+<td style="Width:20%" class="column2">VIA</td>
+<td style="Width:20%" class="column3">VIA</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">OLED</td>
+<td style="Width:20%" class="column2">OLED_12864</td>
+<td style="Width:20%" class="column3">OLED_12864</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">P3</td>
+<td style="Width:20%" class="column2">HDR2X14</td>
+<td style="Width:20%" class="column3">HDR2X14</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">P4</td>
+<td style="Width:20%" class="column2">HDR2X14</td>
+<td style="Width:20%" class="column3">HDR2X14</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">P11</td>
+<td style="Width:20%" class="column2">HDR1X4</td>
+<td style="Width:20%" class="column3">HDR1X4</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">P12</td>
+<td style="Width:20%" class="column2">HDR1X4</td>
+<td style="Width:20%" class="column3">HDR1X4</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">P14</td>
+<td style="Width:20%" class="column2">HDR1X4</td>
+<td style="Width:20%" class="column3">HDR1X4</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">P17</td>
+<td style="Width:20%" class="column2">HDR1X4</td>
+<td style="Width:20%" class="column3">HDR1X4</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">P117</td>
+<td style="Width:20%" class="column2">HDR1X4</td>
+<td style="Width:20%" class="column3">HDR1X4</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">PDRV1</td>
+<td style="Width:20%" class="column2">XH2.54-2P</td>
+<td style="Width:20%" class="column3">XH2.54-2P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">PDRV2</td>
+<td style="Width:20%" class="column2">XH2.54-2P</td>
+<td style="Width:20%" class="column3">XH2.54-2P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">PDRV3</td>
+<td style="Width:20%" class="column2">XH2.54-2P</td>
+<td style="Width:20%" class="column3">XH2.54-2P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">Power</td>
+<td style="Width:20%" class="column2">Power</td>
+<td style="Width:20%" class="column3">Power</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">R1</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">R2</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">R3</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">R4</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">R5</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">R6</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">R7</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">R8</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">R9</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">R10</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">R11</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">R12</td>
+<td style="Width:20%" class="column2">0603P</td>
+<td style="Width:20%" class="column3">0603P</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\CORE.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">RCT6</td>
+<td style="Width:20%" class="column2">STM32F1RCT6</td>
+<td style="Width:20%" class="column3">STM32F1RCT6</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">S1</td>
+<td style="Width:20%" class="column2">3Pin</td>
+<td style="Width:20%" class="column3">3Pin</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">S2</td>
+<td style="Width:20%" class="column2">3Pin</td>
+<td style="Width:20%" class="column3">3Pin</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">S3</td>
+<td style="Width:20%" class="column2">3Pin</td>
+<td style="Width:20%" class="column3">3Pin</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">S4</td>
+<td style="Width:20%" class="column2">3Pin</td>
+<td style="Width:20%" class="column3">3Pin</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">S5</td>
+<td style="Width:20%" class="column2">3Pin</td>
+<td style="Width:20%" class="column3">3Pin</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">S6</td>
+<td style="Width:20%" class="column2">3Pin</td>
+<td style="Width:20%" class="column3">3Pin</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">S7</td>
+<td style="Width:20%" class="column2">3Pin</td>
+<td style="Width:20%" class="column3">3Pin</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">S8</td>
+<td style="Width:20%" class="column2">3Pin</td>
+<td style="Width:20%" class="column3">3Pin</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">SI2C1</td>
+<td style="Width:20%" class="column2">HDR1X4</td>
+<td style="Width:20%" class="column3">HDR1X4</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">SI2C2</td>
+<td style="Width:20%" class="column2">HDR1X4</td>
+<td style="Width:20%" class="column3">HDR1X4</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">SI2C3</td>
+<td style="Width:20%" class="column2">HDR1X4</td>
+<td style="Width:20%" class="column3">HDR1X4</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">SPI1</td>
+<td style="Width:20%" class="column2">HDR1X5</td>
+<td style="Width:20%" class="column3">HDR1X5</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">SPI2</td>
+<td style="Width:20%" class="column2">HDR1X5</td>
+<td style="Width:20%" class="column3">HDR1X5</td>
+<td style="Width:60%" class="column4">D:\A\Library\Miscellaneous Connectors.IntLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">TB66121</td>
+<td style="Width:20%" class="column2">TB6612</td>
+<td style="Width:20%" class="column3">TB6612</td>
+<td style="Width:60%" class="column4">F:\cast\PCB\MY  AD\0805\controlBase.PcbLib</td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><h2>Footprints Not Found</h2><a name="IDGJBHJ4TCQK5BPRHPF5U3VTMOEBTKQKHEWRXI2FIY5WVWN0D0QAOM"><table>
+<tr>
+<th class="column1">Designator</th>
+<th class="column2">Footprint</th>
+<th class="column3">Library to install</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">Potentiometer1</td>
+<td style="Width:30%" class="column2">Potentiometer</td>
+<td style="Width:60%" class="column3">controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">P2</td>
+<td style="Width:30%" class="column2">Potentiometer</td>
+<td style="Width:60%" class="column3">controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">P3</td>
+<td style="Width:30%" class="column2">Potentiometer</td>
+<td style="Width:60%" class="column3">controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">P4</td>
+<td style="Width:30%" class="column2">Potentiometer</td>
+<td style="Width:60%" class="column3">controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">P5</td>
+<td style="Width:30%" class="column2">Potentiometer</td>
+<td style="Width:60%" class="column3">controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">P6</td>
+<td style="Width:30%" class="column2">Potentiometer</td>
+<td style="Width:60%" class="column3">controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1">P7</td>
+<td style="Width:30%" class="column2">Potentiometer</td>
+<td style="Width:60%" class="column3">controlBase.PcbLib</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1">P8</td>
+<td style="Width:30%" class="column2">Potentiometer</td>
+<td style="Width:60%" class="column3">controlBase.PcbLib</td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><hr><a name="IDUOF4AZ0WY0RCBXPA2XBE103HKPT0KOYB1BV5RBNT2NHRMVK0LM2D"><h2>Components Details</h2></a><h2>PCB Difference Details</h2><a name="IDSUHYZTJN2LZ2EWMJ2JHJTB2SWKMDXEALEW0VTOHYW5SIZ2QPO1IG"><table>
+<tr>
+<th class="column1">Designator</th>
+<th class="column2">Layers Containing Differences</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">AMS-3.3</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">DRV1</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">DRV2</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">DRV3</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">E1A</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">E1B</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">E2A</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">E2B</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">encoder1</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">encoder2</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">M1</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">M2</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">M3</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">M4</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">MP</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">PC8171</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">PC8172</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">PC8173</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">PI2C1</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">P2</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">P3</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">P4</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">P5</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">RS</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">stepmotor1</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">stepmotor2</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">stepmotor3</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">SW1</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">SW2</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">SW3</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">TB66001</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">TB66002</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">TB66003</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">TB66122</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">Uart</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">Uart2</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">Uart3</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td style="Width:2%" class="column1">Uart4</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td style="Width:2%" class="column1">Uart5</td>
+<td class="column2">Top Layer, Bottom Layer</td>
+</tr>
+</table></a><a href="#top">Back to top</a><br><br><hr>
+</body>
+</html>
